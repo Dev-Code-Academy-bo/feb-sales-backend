@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Dev-Code-Academy-bo/feb-sales-backend/issues"
   },
-  "homepage": "https://github.com/Dev-Code-Academy-bo/feb-sales-backend#readme"
+  "homepage": "https://github.com/Dev-Code-Academy-bo/feb-sales-backend#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
