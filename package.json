@@ -1,0 +1,19 @@
+{
+  "name": "feb-sales-backend",
+  "version": "1.0.0",
+  "description": "Course Dev Code Academy - Feb",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dev-Code-Academy-bo/feb-sales-backend.git"
+  },
+  "author": "Fernando Hurtado - Dev Code Academy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dev-Code-Academy-bo/feb-sales-backend/issues"
+  },
+  "homepage": "https://github.com/Dev-Code-Academy-bo/feb-sales-backend#readme"
+}
