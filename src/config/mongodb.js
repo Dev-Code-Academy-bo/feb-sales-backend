@@ -9,7 +9,7 @@ function connect() {
     useUnifiedTopology: true,
     useNewUrlParser: true
   });
-  console.log('Databse MongoDB connected ....');
+  console.log('Database MongoDB connected ....');
 }
 
 module.exports = {
