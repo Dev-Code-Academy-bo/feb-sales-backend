@@ -10,6 +10,11 @@ async function create(data) {
   return await user.create(data);
 }
 
+async function get() {
+  return await user.find();
+}
+
 module.exports = {
-  create
+  create,
+  get
 };
