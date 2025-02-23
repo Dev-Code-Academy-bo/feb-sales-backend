@@ -1,31 +1,18 @@
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express()
+
+const dbMongo = require('./src/config/mongodb');
+dbMongo.connect();
 
 const port = process.env.PORT || 3000;
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-});
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/login', function (req, res) {
-  res.send('Welcome to login!!!')
-});
-
-app.get('/api/user', function (req, res) {
-  res.send('Welcome to user!!!')
-});
-
-app.get('/api/product', function (req, res) {
-  res.send('Welcome to product!!!')
-});
-
-app.get('/api/client', function (req, res) {
-  res.send('Welcome to client!!!')
-});
-
-app.get('/api/sale', function (req, res) {
-  res.send('Welcome to sale!!!')
-});
+require('./src/routes')(app);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
