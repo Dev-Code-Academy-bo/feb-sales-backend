@@ -2,8 +2,15 @@
 const userModel = require('./user.model');
 
 async function get(req, res) {
-  const users =  await userModel.find();
-  return res.status(200).json(users);
+  try {
+    const users =  await userModel.find();
+    return res.status(200).json(users);
+  } catch(err) {
+    if(err.status) {
+      return res.status(err.status).json(err.body);
+    }
+    return res.status(500).json(err);
+  }
 }
 
 async function save(req, res) {
@@ -11,10 +18,10 @@ async function save(req, res) {
     const user = await userModel.save(req.body);
     return res.status(200).json(user);
   } catch(err) {
-    return res.status(err.status).json(err.body);
-    // if(err.status) {
-    // }
-    // return res.status(500).json(err.message);
+    if(err.status) {
+      return res.status(err.status).json(err.body);
+    }
+    return res.status(500).json(err);
   }
 }
 
