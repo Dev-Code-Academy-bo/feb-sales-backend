@@ -13,6 +13,18 @@ async function get(req, res) {
   }
 }
 
+async function getById(req, res) {
+  try {
+    const user = await userModel.getById(req.params.id);
+    return res.status(200).json(user);
+  } catch (err) {
+    if(err.status) {
+      return res.status(err.status).json(err.body);
+    }
+    return res.status(500).json(err);
+  }
+}
+
 async function save(req, res) {
   try {
     const user = await userModel.save(req.body);
@@ -41,5 +53,6 @@ async function remove(req, res) {
 module.exports = {
   get,
   save,
-  remove
+  remove,
+  getById
 }

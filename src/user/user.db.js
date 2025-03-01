@@ -21,6 +21,28 @@ async function get() {
   return await user.find();
 }
 
+async function getById(id){
+  try {
+    const res = await user.findById(id);
+    if(res) {
+      return res;
+    }
+    throw errorBuilder.build(
+      CONFIGURE_STATUS,
+      {
+        name: MONGOOSE+' - database - findById',
+        message: 'not found id',
+        status: 404
+      }
+    );
+  } catch(err) {
+    if(err.status === 404) {
+      throw err;
+    }
+    throw errorBuilder.build(MONGOOSE, err);
+  }
+}
+
 async function remove(id) {
   try {
     const res = await user.findOneAndDelete({_id: id });
@@ -30,8 +52,8 @@ async function remove(id) {
     throw errorBuilder.build(
       CONFIGURE_STATUS,
       {
-        name: MONGOOSE+'-Database - delete',
-        message: 'Not found user id',
+        name: MONGOOSE+' - database - delete',
+        message: 'not found user id',
         status: 404
       }
     );
@@ -46,5 +68,6 @@ async function remove(id) {
 module.exports = {
   create,
   get,
-  remove
+  remove,
+  getById
 };

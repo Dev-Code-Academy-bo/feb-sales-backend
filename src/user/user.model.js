@@ -13,8 +13,13 @@ async function remove(userId) {
   return await db.remove(userId);
 }
 
+async function getById(userId) {
+  return await db.getById(userId);
+}
+
 module.exports = {
   save,
   find,
-  remove
+  remove,
+  getById
 };

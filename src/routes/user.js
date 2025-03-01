@@ -7,6 +7,7 @@ const router = express.Router();
 
 router
   .get('/', userController.get)
+  .get('/:id', userController.getById)
   .post('/', userController.save)
   // .put('/', userController.get)
   .delete('/:id', userController.remove);
