@@ -9,7 +9,12 @@ async function find(user) {
   return await db.get();
 }
 
+async function remove(userId) {
+  return await db.remove(userId);
+}
+
 module.exports = {
   save,
-  find
+  find,
+  remove
 };
