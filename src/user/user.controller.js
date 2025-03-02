@@ -1,11 +1,28 @@
 'use strict';
 const userModel = require('./user.model');
 
+const NAME = 'name';
+const USERNAME = 'username';
+
 async function get(req, res) {
-  try {
-    const users =  await userModel.find();
-    return res.status(200).json(users);
+  try {    
+    const QUERY = [];
+    for (const key in req.query) {
+      QUERY.push(key);
+    }
+
+    let user;
+    switch (QUERY[0]) {
+      case NAME : user = await userModel.findByName(req.query[NAME]);
+        break;
+      case USERNAME : user = await userModel.findByUserName(req.query[USERNAME]);
+        break;
+    default: user = await userModel.find();
+      break;
+    }    
+    return res.status(200).json(user);
   } catch(err) {
+    console.log('errorrrr controllerrrrr', err);
     if(err.status) {
       return res.status(err.status).json(err.body);
     }

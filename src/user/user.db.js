@@ -18,7 +18,21 @@ async function create(data) {
 }
 
 async function get() {
-  return await user.find();
+  try {
+    return await user.find();
+  } catch(err) {
+    throw errorBuilder.build(MONGOOSE, err);
+  }
+}
+
+async function getBy(data){
+  try {
+    console.log('data', data);
+    return await user.find(data);
+  } catch(err) {
+    console.log('error', err);
+    throw errorBuilder.build(MONGOOSE, err);
+  }
 }
 
 async function getById(id){
@@ -45,8 +59,24 @@ async function getById(id){
 
 async function put(id, data){
   try {
-    return user.replaceOne({ _id: id }, data);
+    await getById(id);
+    const res =  await user.replaceOne({ _id: id }, data);
+    if(res.modifiedCount === 1) {
+      return getById(id);
+    }
+    throw errorBuilder.build(
+      CONFIGURE_STATUS,
+      {
+        name: +' - database - update',
+        message: 'not updated user',
+        status: 400
+      }
+    );
   } catch (err) {
+    console.log('error put :', err);
+    if(err.body) {
+      throw err;
+    }
     throw errorBuilder.build(MONGOOSE, err);
   }
 }
@@ -78,5 +108,6 @@ module.exports = {
   get,
   remove,
   getById,
-  put
+  put,
+  getBy
 };
