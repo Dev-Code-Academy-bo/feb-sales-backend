@@ -21,10 +21,19 @@ async function put(userId, user) {
   return await db.put(userId, user);
 }
 
+async function findByUserName(data) {
+  return await db.getBy({ username: data });
+}
+
+async function findByName(data) {
+  return await db.getBy({ name: data });
+}
 module.exports = {
   save,
   find,
   remove,
   getById,
-  put
+  put,
+  findByUserName,
+  findByName
 };

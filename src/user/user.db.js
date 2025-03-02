@@ -18,7 +18,21 @@ async function create(data) {
 }
 
 async function get() {
-  return await user.find();
+  try {
+    return await user.find();
+  } catch(err) {
+    throw errorBuilder.build(MONGOOSE, err);
+  }
+}
+
+async function getBy(data){
+  try {
+    console.log('data', data);
+    return await user.find(data);
+  } catch(err) {
+    console.log('error', err);
+    throw errorBuilder.build(MONGOOSE, err);
+  }
 }
 
 async function getById(id){
@@ -94,5 +108,6 @@ module.exports = {
   get,
   remove,
   getById,
-  put
+  put,
+  getBy
 };
