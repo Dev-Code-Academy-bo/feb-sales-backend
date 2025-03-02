@@ -22,7 +22,6 @@ async function get(req, res) {
     }    
     return res.status(200).json(user);
   } catch(err) {
-    console.log('errorrrr controllerrrrr', err);
     if(err.status) {
       return res.status(err.status).json(err.body);
     }
