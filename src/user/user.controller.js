@@ -37,6 +37,17 @@ async function save(req, res) {
   }
 }
 
+async function update(req, res){
+  try {
+    const user = await userModel.put(req.params.id, req.body);
+    return res.status(200).json(user);
+  } catch (err) {
+    if(err.status) {
+      return res.status(err.status).json(err.body);
+    }
+    return res.status(500).json(err);
+  }
+}
 async function remove(req, res) {
   try {
     console.log('remove id ', req.params.id);
@@ -54,5 +65,6 @@ module.exports = {
   get,
   save,
   remove,
-  getById
+  getById,
+  update
 }

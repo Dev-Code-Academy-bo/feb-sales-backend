@@ -43,6 +43,14 @@ async function getById(id){
   }
 }
 
+async function put(id, data){
+  try {
+    return user.replaceOne({ _id: id }, data);
+  } catch (err) {
+    throw errorBuilder.build(MONGOOSE, err);
+  }
+}
+
 async function remove(id) {
   try {
     const res = await user.findOneAndDelete({_id: id });
@@ -69,5 +77,6 @@ module.exports = {
   create,
   get,
   remove,
-  getById
+  getById,
+  put
 };

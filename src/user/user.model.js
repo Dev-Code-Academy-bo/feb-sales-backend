@@ -17,9 +17,14 @@ async function getById(userId) {
   return await db.getById(userId);
 }
 
+async function put(userId, user) {
+  return await db.put(userId, user);
+}
+
 module.exports = {
   save,
   find,
   remove,
-  getById
+  getById,
+  put
 };

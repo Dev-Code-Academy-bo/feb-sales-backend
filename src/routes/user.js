@@ -6,10 +6,10 @@ const userController = require('../user/user.controller');
 const router = express.Router();
 
 router
+  .post('/', userController.save)
   .get('/', userController.get)
   .get('/:id', userController.getById)
-  .post('/', userController.save)
-  // .put('/', userController.get)
+  .put('/:id', userController.update)
   .delete('/:id', userController.remove);
 
 module.exports = router;
