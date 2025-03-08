@@ -1,8 +1,17 @@
 'use strict';
 const db = require('./sale.db');
+const productModel = require('../product/product.model');
 
 async function save(sale) {
-  return await db.create(sale);
+  try{
+    const result = await db.create(sale);
+    const product = await productModel.getById(sale.idProduct);
+    product.stock = product.stock - sale.quantity;
+    await productModel.put(sale.idProduct, product);
+    return result;
+  } catch(err){
+    throw err;
+  }
 }
 
 async function find(sale) {
