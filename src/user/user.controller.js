@@ -66,7 +66,6 @@ async function update(req, res){
 }
 async function remove(req, res) {
   try {
-    console.log('remove id ', req.params.id);
     const user = await userModel.remove(req.params.id);
     return res.status(200).json(user);
   } catch (err) {

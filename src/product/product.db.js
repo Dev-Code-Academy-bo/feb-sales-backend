@@ -1,17 +1,17 @@
 'use strict';
 const mongoose = require('mongoose');
-const schema = require('./user.schema');
+const schema = require('./product.schema');
 const errorBuilder = require('../commons/error-builder');
 
-const DOCUMENT = 'user';
+const DOCUMENT = 'product';
 const MONGOOSE = 'mongoose';
 const CONFIGURE_STATUS = 'configure-status';
 
-let user = mongoose.model(DOCUMENT, schema.userSchema);
+let product = mongoose.model(DOCUMENT, schema.productSchema);
 
 async function create(data) {
   try {
-    return await user.create(data);
+    return await product.create(data);
   } catch(err) {
     throw errorBuilder.build(MONGOOSE, err);
   }
@@ -19,7 +19,7 @@ async function create(data) {
 
 async function get() {
   try {
-    return await user.find();
+    return await product.find();
   } catch(err) {
     throw errorBuilder.build(MONGOOSE, err);
   }
@@ -27,15 +27,16 @@ async function get() {
 
 async function getBy(data){
   try {
-    return await user.find(data);
+    return await product.find(data);
   } catch(err) {
+    console.log('error', err);
     throw errorBuilder.build(MONGOOSE, err);
   }
 }
 
 async function getById(id){
   try {
-    const res = await user.findById(id);
+    const res = await product.findById(id);
     if(res) {
       return res;
     }
@@ -58,7 +59,7 @@ async function getById(id){
 async function put(id, data){
   try {
     await getById(id);
-    const res =  await user.replaceOne({ _id: id }, data);
+    const res =  await product.replaceOne({ _id: id }, data);
     if(res.modifiedCount === 1) {
       return getById(id);
     }
@@ -66,7 +67,7 @@ async function put(id, data){
       CONFIGURE_STATUS,
       {
         name: +' - database - update',
-        message: 'not updated user',
+        message: 'not updated product',
         status: 400
       }
     );
@@ -80,7 +81,7 @@ async function put(id, data){
 
 async function remove(id) {
   try {
-    const res = await user.findOneAndDelete({_id: id });
+    const res = await product.findOneAndDelete({_id: id });
     if(res) {
       return res;
     }
@@ -88,7 +89,7 @@ async function remove(id) {
       CONFIGURE_STATUS,
       {
         name: MONGOOSE+' - database - delete',
-        message: 'not found user id',
+        message: 'not found product id',
         status: 404
       }
     );

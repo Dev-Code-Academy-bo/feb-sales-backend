@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 const express = require('express');
 const productController = require('../product/product.controller');
@@ -6,9 +6,10 @@ const productController = require('../product/product.controller');
 const router = express.Router();
 
 router
-  .get('/', productController.get);
-  // .post('/', userController.get)
-  // .put('/', userController.get)
-  // .delete('/', userController.get);
+  .post('/', productController.save)
+  .get('/', productController.get)
+  .get('/:id', productController.getById)
+  .put('/:id', productController.update)
+  .delete('/:id', productController.remove);
 
 module.exports = router;

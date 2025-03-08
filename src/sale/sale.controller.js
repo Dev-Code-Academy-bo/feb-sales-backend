@@ -1,5 +1,5 @@
 'use strict';
-const productModel = require('./product.model');
+const saleModel = require('./sale.model');
 
 const NAME = 'name';
 
@@ -10,14 +10,14 @@ async function get(req, res) {
       QUERY.push(key);
     }
 
-    let product;
+    let sale;
     switch (QUERY[0]) {
-      case NAME : product = await productModel.findByName(req.query[NAME]);
+      case NAME : sale = await saleModel.findByName(req.query[NAME]);
         break;
-    default: product = await productModel.find();
+    default: sale = await saleModel.find();
       break;
     }    
-    return res.status(200).json(product);
+    return res.status(200).json(sale);
   } catch(err) {
     if(err.status) {
       return res.status(err.status).json(err.body);
@@ -28,8 +28,8 @@ async function get(req, res) {
 
 async function getById(req, res) {
   try {
-    const product = await productModel.getById(req.params.id);
-    return res.status(200).json(product);
+    const sale = await saleModel.getById(req.params.id);
+    return res.status(200).json(sale);
   } catch (err) {
     if(err.status) {
       return res.status(err.status).json(err.body);
@@ -40,8 +40,8 @@ async function getById(req, res) {
 
 async function save(req, res) {
   try {
-    const product = await productModel.save(req.body);
-    return res.status(200).json(product);
+    const sale = await saleModel.save(req.body);
+    return res.status(200).json(sale);
   } catch(err) {
     if(err.status) {
       return res.status(err.status).json(err.body);
@@ -52,8 +52,8 @@ async function save(req, res) {
 
 async function update(req, res){
   try {
-    const product = await productModel.put(req.params.id, req.body);
-    return res.status(200).json(product);
+    const sale = await saleModel.put(req.params.id, req.body);
+    return res.status(200).json(sale);
   } catch (err) {
     if(err.status) {
       return res.status(err.status).json(err.body);
@@ -63,8 +63,8 @@ async function update(req, res){
 }
 async function remove(req, res) {
   try {
-    const product = await productModel.remove(req.params.id);
-    return res.status(200).json(product);
+    const sale = await saleModel.remove(req.params.id);
+    return res.status(200).json(sale);
   } catch (err) {
     if(err.status) {
       return res.status(err.status).json(err.body);

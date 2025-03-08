@@ -1,17 +1,17 @@
 'use strict';
 const mongoose = require('mongoose');
-const schema = require('./user.schema');
+const schema = require('./sale.schema');
 const errorBuilder = require('../commons/error-builder');
 
-const DOCUMENT = 'user';
+const DOCUMENT = 'sale';
 const MONGOOSE = 'mongoose';
 const CONFIGURE_STATUS = 'configure-status';
 
-let user = mongoose.model(DOCUMENT, schema.userSchema);
+let sale = mongoose.model(DOCUMENT, schema.saleSchema);
 
 async function create(data) {
   try {
-    return await user.create(data);
+    return await sale.create(data);
   } catch(err) {
     throw errorBuilder.build(MONGOOSE, err);
   }
@@ -19,7 +19,10 @@ async function create(data) {
 
 async function get() {
   try {
-    return await user.find();
+    return await sale.find()
+        .populate('idProduct')
+        .populate('idUser')
+        .populate('idClient');
   } catch(err) {
     throw errorBuilder.build(MONGOOSE, err);
   }
@@ -27,7 +30,10 @@ async function get() {
 
 async function getBy(data){
   try {
-    return await user.find(data);
+    return await sale.find(data)
+        .populate('idProduct')
+        .populate('idUser')
+        .populate('idClient');
   } catch(err) {
     throw errorBuilder.build(MONGOOSE, err);
   }
@@ -35,7 +41,7 @@ async function getBy(data){
 
 async function getById(id){
   try {
-    const res = await user.findById(id);
+    const res = await sale.findById(id);
     if(res) {
       return res;
     }
@@ -58,7 +64,7 @@ async function getById(id){
 async function put(id, data){
   try {
     await getById(id);
-    const res =  await user.replaceOne({ _id: id }, data);
+    const res =  await sale.replaceOne({ _id: id }, data);
     if(res.modifiedCount === 1) {
       return getById(id);
     }
@@ -66,7 +72,7 @@ async function put(id, data){
       CONFIGURE_STATUS,
       {
         name: +' - database - update',
-        message: 'not updated user',
+        message: 'not updated sale',
         status: 400
       }
     );
@@ -80,7 +86,7 @@ async function put(id, data){
 
 async function remove(id) {
   try {
-    const res = await user.findOneAndDelete({_id: id });
+    const res = await sale.findOneAndDelete({_id: id });
     if(res) {
       return res;
     }
@@ -88,7 +94,7 @@ async function remove(id) {
       CONFIGURE_STATUS,
       {
         name: MONGOOSE+' - database - delete',
-        message: 'not found user id',
+        message: 'not found sale id',
         status: 404
       }
     );
