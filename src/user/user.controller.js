@@ -43,6 +43,7 @@ async function getById(req, res) {
 
 async function save(req, res) {
   try {
+    req.body.photo = await `photos/${req.file.filename}`;
     const user = await userModel.save(req.body);
     return res.status(200).json(user);
   } catch(err) {
