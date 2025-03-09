@@ -40,6 +40,7 @@ async function getById(req, res) {
 
 async function save(req, res) {
   try {
+    req.body.image = await `photos/${req.file.filename}`;
     const product = await productModel.save(req.body);
     return res.status(200).json(product);
   } catch(err) {
