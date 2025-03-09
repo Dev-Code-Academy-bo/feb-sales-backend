@@ -34,7 +34,7 @@ async function validate(data) {
 function createToken(){
   const token = jwt.sign(
     { course: COURSE },
-    KEY,
+    'nodejs2025',
     { expiresIn: 60*5 }
   );
   return token

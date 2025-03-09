@@ -1,8 +1,11 @@
 'use strict';
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const errorBuilder = require('./error-builder');
 
-const { SALT_ROUNDS } = require('../config/global');
+const { SALT_ROUNDS, KEY } = require('../config/global');
+const NO_TOKEN = 'no token';
 
 
 function encrypt(res, request, next) {
@@ -12,6 +15,24 @@ function encrypt(res, request, next) {
   next();
 }
 
+async function verifyToken(res, request, next) {
+  try{
+    const token = request.req.query.token;
+    jwt.verify(token, 'nodejs2025');
+    next();
+  } catch(err){
+    const newError = errorBuilder.build(
+      NO_TOKEN,
+      {
+        name: 'No token or Token Expired',
+        message: 'Send a token or valid token'
+      }
+    );
+    return res.res.status(newError.status).json(newError.body);
+  }
+}
+
 module.exports = {
-  encrypt
+  encrypt,
+  verifyToken
 }
